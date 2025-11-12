@@ -10,7 +10,7 @@ const { isValidToken } = require('./middleware/middleware');
 
 // Enable CORS for frontend
 app.use(cors({
-  origin: *,
+  origin: process.env.FRONTEND_URL,
   credentials: true
 }))
 
