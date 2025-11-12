@@ -9,61 +9,14 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  username    String   @unique
-  email       String   @unique
-  password    String   // hashed password
-  name        String?
-  avatarUrl   String?
-  role        String   @default("user")
-  joinedAt    DateTime @default(now())
-  lastActiveAt DateTime?
-}
-
-model Channel {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  description String?
-  createdBy   String   // User.id
-  members     String[] @db.ObjectId
-  isDirect    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime?
-}
-
-model Message {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  channelId   String   @db.ObjectId // reference to Channel
-  senderId    String   @db.ObjectId // reference to User
-  content     String?
-  mediaUrl    String?
-  mediaType   String?
-  sentAt      DateTime @default(now())
-  readBy      String[] @db.ObjectId
-  deleted     Boolean  @default(false)
-}
-
-model Media {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  uploaderId     String   @db.ObjectId // User.id
-  channelId      String   @db.ObjectId // Channel.id
-  type           String
-  url            String
-  uploadedAt     DateTime @default(now())
-  originalFilename String?
-}
-
-model CallLog {
-  id           String   @id @default(auto()) @map("_id") @db.ObjectId
-  channelId    String   @db.ObjectId
-  participants String[] @db.ObjectId
-  startedAt    DateTime
-  endedAt      DateTime?
-  callType     String
-  status       String
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
 }
